@@ -7,6 +7,7 @@ export const Input = ({
   error,
   className = '',
   id,
+  transparent = false, // 🔹 nova prop para controlar fundo
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -29,7 +30,7 @@ export const Input = ({
         <input
           id={inputId}
           type={inputType}
-          className={`w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-dark placeholder-dark/60 focus:outline-none focus:ring-2 focus:ring-light focus:border-transparent transition-colors ${error ? 'border-red-500' : ''} ${className}`}
+          className={`w-full px-3 py-2 ${transparent ? 'bg-white/10' : 'bg-white'} border border-white/20 rounded-lg text-dark placeholder-dark/60 focus:outline-none focus:ring-2 focus:ring-light focus:border-transparent transition-colors ${error ? 'border-red-500' : ''} ${className}`}
           aria-invalid={error ? 'true' : 'false'}
           aria-describedby={errorId}
           {...props}

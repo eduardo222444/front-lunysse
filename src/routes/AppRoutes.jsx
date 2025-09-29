@@ -25,6 +25,7 @@ import { ChatIA } from '../pages/ChatIA';
 import { Solicitacoes } from '../pages/Solicitacoes';
 import { Pacientes } from '../pages/Pacientes';
 import { PacienteDetalhes } from '../pages/PacienteDetalhes'; 
+import { SessaoDetalhes } from '../pages/SessaoDetalhes';
 /* ==============================
    Componente de rota protegida
    ============================== */
@@ -145,6 +146,11 @@ export const AppRoutes = () => {
                    <Route path="/pacientedetalhes/:id" element={
                     <ProtectedRoute>
                       <PacienteDetalhes />
+                    </ProtectedRoute>
+                } />
+               <Route path="/Sessaodetalhes/:id" element={
+                    <ProtectedRoute>
+                      <SessaoDetalhes />
                     </ProtectedRoute>
                 } />
                
