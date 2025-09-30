@@ -5,7 +5,8 @@ import { LoadingSpinner } from "../components/LoadingSpinner";
 import { Button } from "../components/Button";
 import { useToast } from "../components/ToastContext";
 import { motion, AnimatePresence } from "framer-motion";
-import { Bell, UserCircle2, Clock, XCircle, CheckCircle2 } from "lucide-react";
+import { Bell, UserCircle2, XCircle, CheckCircle2 } from "lucide-react";
+import { Card } from "../components/Card";
 
 export const Solicitacoes = () => {
   const { user } = useAuth();
@@ -99,14 +100,15 @@ export const Solicitacoes = () => {
         <Bell className="w-9 h-9 text-accent" />
         <h1 className="text-3xl font-bold text-white">Solicitações Pendentes</h1>
       </div>
-      
 
       {/* Lista */}
       {requests.length === 0 ? (
         <div className="text-center py-16 bg-dark/30 rounded-2xl border border-dark/40">
           <UserCircle2 className="w-20 h-20 text-dark/30 mx-auto mb-4" />
           <h3 className="text-lg font-semibold text-dark">Nenhuma solicitação</h3>
-          <p className="text-dark/60 text-sm">Quando pacientes solicitarem atendimento, aparecerão aqui.</p>
+          <p className="text-dark/40 text-sm">
+            Quando pacientes solicitarem atendimento, aparecerão aqui.
+          </p>
         </div>
       ) : (
         <div className="grid md:grid-cols-2 gap-6">
@@ -119,62 +121,64 @@ export const Solicitacoes = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3 }}
-                className="p-6 rounded-2xl bg-dark/40 border border-dark/50 shadow-lg hover:shadow-xl transition"
               >
-                {/* Topo */}
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-14 h-14 rounded-full bg-accent/20 flex items-center justify-center">
-                    <UserCircle2 className="w-8 h-8 text-accent" />
+                <Card className="p-6 bg-dark/40 border border-dark/50 shadow-lg hover:shadow-xl transition bg-white">
+                  {/* Topo */}
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-14 h-14 rounded-full bg-accent/20 flex items-center justify-center">
+                      <UserCircle2 className="w-8 h-8 text-accent" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">
+                        {req.patientName}
+                      </h3>
+                      <p className="text-sm text-gray-300">{req.patientEmail}</p>
+                      <p className="text-sm text-gray-400">{req.patientPhone}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white">{req.patientName}</h3>
-                    <p className="text-sm text-gray-300">{req.patientEmail}</p>
-                    <p className="text-sm text-gray-400">{req.patientPhone}</p>
-                  </div>
-                </div>
-                
 
-                {/* Descrição */}
-                {req.description && (
-                  <p className="text-sm text-gray-200 bg-dark/30 p-3 rounded-lg mb-4">
-                    {req.description}
-                  </p>
-                )}
+                  {/* Descrição */}
+                  {req.description && (
+                    <p className="text-sm text-gray-200 bg-dark/30 p-3 rounded-lg mb-4">
+                      {req.description}
+                    </p>
+                  )}
 
-                {/* Rodapé */}
-                <div className="flex items-center justify-between">
-                  <span
-                    className={`px-3 py-1 text-xs rounded-full font-medium ${
-                      urgencyColors[req.urgency] || "bg-gray-100 text-gray-600"
-                    }`}
-                  >
-                    {req.urgency === "alta"
-                      ? "Alta urgência"
-                      : req.urgency === "media"
-                      ? "Média urgência"
-                      : "Baixa urgência"}
-                  </span>
-
-                  <div className="flex gap-2">
-                    <Button
-                      variant="secondary"
-                      onClick={() => handleReject(req.id)}
-                      loading={processing.has(req.id)}
-                      className="flex items-center gap-1"
+                  {/* Rodapé */}
+                  <div className="flex items-center justify-between">
+                    <span
+                      className={`px-3 py-1 text-xs rounded-full font-medium ${
+                        urgencyColors[req.urgency] || "bg-gray-100 text-gray-600"
+                      }`}
                     >
-                      <XCircle className="w-4 h-4" />
-                      Rejeitar
-                    </Button>
-                    <Button
-                      onClick={() => handleAccept(req.id, req)}
-                      loading={processing.has(req.id)}
-                      className="flex items-center gap-1"
-                    >
-                      <CheckCircle2 className="w-4 h-4" />
-                      Aceitar
-                    </Button>
+                      {req.urgency === "alta"
+                        ? "Alta urgência"
+                        : req.urgency === "media"
+                        ? "Média urgência"
+                        : "Baixa urgência"}
+                    </span>
+
+                    <div className="flex gap-2">
+                      <Button
+                        variant="secondary"
+                        onClick={() => handleReject(req.id)}
+                        loading={processing.has(req.id)}
+                        className="flex items-center gap-1"
+                      >
+                        <XCircle className="w-4 h-4" />
+                        Rejeitar
+                      </Button>
+                      <Button
+                        onClick={() => handleAccept(req.id, req)}
+                        loading={processing.has(req.id)}
+                        className="flex items-center gap-1"
+                      >
+                        <CheckCircle2 className="w-4 h-4" />
+                        Aceitar
+                      </Button>
+                    </div>
                   </div>
-                </div>
+                </Card>
               </motion.div>
             ))}
           </AnimatePresence>

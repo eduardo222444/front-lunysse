@@ -63,7 +63,7 @@ export const DashboardPaciente = () => {
 
       {/* Solicitações */}
       {requests.length > 0 && (
-        <Card className="bg-blue-50">
+        <Card className="bg-blue-50 bg-white">
           <div className="flex items-center gap-2 mb-4">
             <Bell className="w-5 h-5 text-blue-600" />
             <h2 className="text-xl font-semibold text-dark">Minhas Solicitações</h2>
@@ -138,7 +138,7 @@ export const DashboardPaciente = () => {
 
       {/* Próximas Sessões */}
       <Card>
-        <div className="flex items-center gap-2 mb-4">
+        <div className="flex items-center gap-2 mb-4 bg-white">
           <Calendar className="w-5 h-5 text-light" />
           <h2 className="text-xl font-semibold text-dark">Próximas Sessões</h2>
         </div>
@@ -171,7 +171,7 @@ export const DashboardPaciente = () => {
       {/* Histórico Recente */}
       {pastAppointments.length > 0 && (
         <Card>
-          <h2 className="text-xl font-semibold text-dark mb-4">Histórico Recente</h2>
+          <h2 className="text-xl font-semibold text-dark mb-4 bg-white">Histórico Recente</h2>
           <div className="space-y-3">
             {pastAppointments.slice(0, 3).map(appointment => (
               <div key={appointment.id} className="flex justify-between items-center p-3 bg-white/5 rounded-lg">

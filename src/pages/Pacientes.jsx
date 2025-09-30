@@ -47,16 +47,16 @@ export const Pacientes = () => {
  
       <div className="grid gap-6">
         {patients.length === 0 ? (
-          <Card className="text-center py-12">
+          <Card className="text-center py-12 bg-white">
             <Users className="w-16 h-16 text-dark/30 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-dark mb-2">Nenhum paciente encontrado</h3>
             <p className="text-dark/70">Seus pacientes aparecerão aqui conforme os agendamentos.</p>
           </Card>
         ) : (
           patients.map(patient => (
-            <Card
+            <Card 
               key={patient.id}
-              className="cursor-pointer hover:shadow-lg transition-shadow"
+              className="cursor-pointer hover:shadow-lg transition-shadow bg-white"
               onClick={() => navigate(`/pacientes/${patient.id}`)}
             >
               <div className="space-y-4">

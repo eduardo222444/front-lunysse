@@ -83,7 +83,7 @@ export const ChatIA = () => {
 <p className="text-white">Assistente especializada em psicologia para apoiar sua prática clínica</p>
 </div>
  
-      <Card className="h-[600px] flex flex-col">
+      <Card className="h-[600px] flex flex-col bg-white">
         {/* Messages Area */}
 <div className="flex-1 overflow-y-auto p-6 space-y-4">
           {messages.map((message) => (

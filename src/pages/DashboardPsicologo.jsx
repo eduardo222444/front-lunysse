@@ -117,7 +117,7 @@ export const DashboardPsicologo = () => {
         animate={{ opacity: 1, y: 0 }}
         className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
       >
-        <Card>
+        <Card className='bg-white'>
   <h3 className="font-semibold text-dark">Pacientes Ativos</h3>
   <div className="flex justify-between items-center mt-2">
     <span className="text-2xl font-bold text-medium">6</span>
@@ -143,7 +143,7 @@ export const DashboardPsicologo = () => {
       {/* Welcome Message for New Psychologists */}
       {isNewPsychologist && (
         <motion.div variants={fadeInUp}>
-          <Card className="text-center py-12 border-2 border-dashed border-medium/30">
+          <Card className="text-center py-12 border-2 border-dashed border-medium/30 bg-white">
             {/* 🖼️ ESPAÇO PARA IMAGEM: Ilustração de boas-vindas para novos psicólogos */}
             <Users className="w-16 h-16 text-medium/50 mx-auto mb-4" />
             <h3 className="text-2xl font-bold text-dark mb-3">Bem-vindo ao Lunysse!</h3>
@@ -169,7 +169,7 @@ export const DashboardPsicologo = () => {
           { icon: TrendingUp, label: 'Taxa de Comparecimento', value: `${attendanceRate}%`, color: 'text-blue-600', bg: 'bg-blue-100' }
         ].map((stat, index) => (
           <motion.div key={index} variants={fadeInUp}>
-            <Card className="p-6 hover:scale-105 transition-transform duration-300">
+            <Card className="p-6 hover:scale-105 transition-transform duration-300 bg-white">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-dark/70 text-sm font-medium">{stat.label}</p>
@@ -190,7 +190,7 @@ export const DashboardPsicologo = () => {
         <div className="lg:col-span-2 space-y-6">
           {/* Today's Appointments */}
           <motion.div variants={fadeInUp}>
-            <Card className="p-6">
+            <Card className="p-6 bg-white">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-bold text-dark">Sessões de Hoje</h2>
                 <Clock className="w-5 h-5 text-medium" />
@@ -233,7 +233,7 @@ export const DashboardPsicologo = () => {
           {/* Patients List */}
           {!isNewPsychologist && (
             <motion.div variants={fadeInUp}>
-              <Card className="p-6">
+              <Card className="p-6 bg-white">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
                   <h2 className="text-xl font-bold text-dark">Meus Pacientes</h2>
                   <div className="flex gap-3 w-full md:w-auto">
@@ -259,11 +259,11 @@ export const DashboardPsicologo = () => {
                   </div>
                 </div>
  
-                <div className="space-y-3">
+                <div className="space-y-3 bg-white">
                   {filteredPatients.slice(0, 6).map(patient => (
                     <div key={patient.id} className="flex items-center p-4 bg-white/50 rounded-xl hover:bg-white/80 transition-colors">
                       {/* 🖼️ SUBSTITUA: Foto real do paciente */}
-                      <div className="w-12 h-12 bg-gradient-to-br from-medium to-accent rounded-full flex items-center justify-center text-white font-semibold mr-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-medium to-accent rounded-full flex items-center justify-center text-dark font-semibold mr-4">
                         {/* <img src={`/images/patients/${patient.id}.jpg`} alt={patient.name} className="w-12 h-12 rounded-full object-cover" /> */}
                         {getInitials(patient.name)}
                       </div>
@@ -302,7 +302,7 @@ export const DashboardPsicologo = () => {
           {/* Pending Requests */}
           {pendingRequests > 0 && (
             <motion.div variants={fadeInUp}>
-              <Card className="p-6">
+              <Card className="p-6 bg-white">
                 <div className="flex items-center gap-2 mb-4">
                   <AlertTriangle className="w-5 h-5 text-orange-500" />
                   <h3 className="font-bold text-dark">Solicitações Pendentes</h3>
@@ -336,7 +336,7 @@ export const DashboardPsicologo = () => {
  
           {/* Upcoming Appointments */}
           <motion.div variants={fadeInUp}>
-            <Card className="p-6">
+            <Card className="p-6 bg-white">
               <h3 className="font-bold text-dark mb-4">Próximos Agendamentos</h3>
               {upcomingAppointments.length === 0 ? (
                 <div className="text-center py-6">
@@ -368,7 +368,7 @@ export const DashboardPsicologo = () => {
  
           {/* Quick Stats */}
           <motion.div variants={fadeInUp}>
-            <Card className="p-6">
+            <Card className="p-6 bg-white">
               <h3 className="font-bold text-dark mb-4">Estatísticas Rápidas</h3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
