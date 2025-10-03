@@ -149,43 +149,48 @@ http://localhost:5173/
  
 ## 📁 Estrutura do Projeto
  
-```
-src/
-├── components/          # Componentes reutilizáveis
-│   ├── Button.jsx      # Botão customizado com variantes
-│   ├── Card.jsx        # Container com glassmorphism
-|   ├── Footer.jsx        # Container footer
-│   ├── Input.jsx       # Input com validação e show/hide password
-│   ├── LoadingSpinner.jsx # Spinner de carregamento
-│   ├── MarkdownRenderer.jsx # Renderizador de markdown para IA
-│   ├── Modal.jsx       # Modal responsivo com overlay
-│   ├── PublicNavbar.jsx # Navbar para páginas públicas
-│   └── Sidebar.jsx     # Sidebar adaptativa para usuários autenticados
-├── context/            # Contextos React
-│   └── AuthContext.jsx # Contexto de autenticação
-├── pages/              # Páginas da aplicação
-│   ├── About.jsx       # Página sobre o projeto
-│   ├── Agendamento.jsx # Sistema de agendamento (pacientes)
-│   ├── ChatIA.jsx      # Chat com IA especializada (psicólogos)
-│   ├── DashboardPaciente.jsx # Dashboard para pacientes
-│   ├── DashboardPsicologo.jsx # Dashboard para psicólogos
-│   ├── Home.jsx        # Página inicial pública
-│   ├── Login.jsx       # Login padrão
-│   ├── NotFound.jsx    # Página 404 personalizada
-│   ├── PacienteDetalhes.jsx # Detalhes e histórico do paciente
-│   ├── Pacientes.jsx   # Lista de pacientes (psicólogos)
-│   ├── Register.jsx    # Cadastro de usuários
-│   ├── Relatorios.jsx  # Relatórios e analytics (psicólogos)
-│   └── -SessaoDetalhes.jsx # Detalhes e gestão de sessões
-├── routes/             # Configuração de rotas
-│   └── AppRoutes.jsx   # Rotas principais
-├── services/           # Serviços e APIs
-│   ├── aiService.js    # Serviço de IA
-│   └── mockApi.js      # API mockada
-├── App.jsx             # Componente principal
-├── index.css           # Estilos globais Tailwind
-└── main.jsx            # Entry point
-```
+```src/
+├── assets/ 
+├── components/ # Componentes reutilizáveis
+│   ├── AvailabilityPicker.jsx   # Seletor de disponibilidade
+│   ├── Button.jsx               # Botão customizado com variantes
+│   ├── Card.jsx                 # Container com glassmorphism
+│   ├── FromField.jsx            # (Acho que seria FormField) campo de formulário
+│   ├── Input.jsx                # Input com validação e show/hide password
+│   ├── LoadingSpinner.jsx       # Spinner de carregamento
+│   ├── MarkdownRenderer.jsx     # Renderizador de markdown para IA
+│   ├── PublicNavbar.jsx         # Navbar para páginas públicas
+│   ├── ScrollToTop.jsx          # Scroll automático pro topo
+│   ├── Sidebar.jsx              # Sidebar adaptativa para usuários autenticados
+│   ├── ToastContext.jsx         # Contexto de toasts (notificações)
+│   ├── Footer.jsx               # Container footer (adicionar)
+│   └── Modal.jsx                # Modal responsivo com overlay (adicionar)
+├── context/ # Contextos React
+│   └── AuthContext.jsx          # Contexto de autenticação (adicionar)
+├── pages/ # Páginas da aplicação
+│   ├── About.jsx                # Página sobre o projeto
+│   ├── Agendamento.jsx          # Sistema de agendamento (pacientes)
+│   ├── ChatIA.jsx               # Chat com IA especializada (psicólogos)
+│   ├── DashboardPaciente.jsx    # Dashboard para pacientes
+│   ├── DashboardPsicologo.jsx   # Dashboard para psicólogos
+│   ├── Home.jsx                 # Página inicial pública
+│   ├── Login.jsx                # Login padrão
+│   ├── NotFound.jsx             # Página 404 personalizada
+│   ├── PacienteDetalhes.jsx     # Detalhes e histórico do paciente
+│   ├── Pacientes.jsx            # Lista de pacientes (psicólogos)
+│   ├── Register.jsx             # Cadastro de usuários
+│   ├── Relatorios.jsx           # Relatórios e analytics (psicólogos)
+│   ├── SessaoDetalhes.jsx       # Detalhes e gestão de sessões
+│   └── Solicitacoes.jsx         # Solicitações (extra, veio da FT)
+├── routes/
+│   └── AppRoutes.jsx            # Rotas principais (adicionar)
+├── services/ # Serviços e APIs
+│   ├── aiService.js             # Serviço de IA (adicionar)
+│   └── mockApi.js               # API mockada (adicionar)
+├── App.jsx                      # Componente principal
+├── index.css                    # Estilos globais Tailwind
+└── main.jsx                     # Entry point
+ 
  
 ## 🔌 API Mock
  
