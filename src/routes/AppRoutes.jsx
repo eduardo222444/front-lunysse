@@ -26,6 +26,7 @@ import { Solicitacoes } from '../pages/Solicitacoes';
 import { Pacientes } from '../pages/Pacientes';
 import { PacienteDetalhes } from '../pages/PacienteDetalhes'; 
 import { SessaoDetalhes } from '../pages/SessaoDetalhes';
+
 /* ==============================
    Componente de rota protegida
    ============================== */
@@ -143,12 +144,12 @@ export const AppRoutes = () => {
                         <Pacientes/>
                     </ProtectedRoute>
                 } />
-                   <Route path="/pacientedetalhes/:id" element={
+                   <Route path="/pacientes/:id" element={
                     <ProtectedRoute>
                       <PacienteDetalhes />
                     </ProtectedRoute>
                 } />
-               <Route path="/Sessaodetalhes/:id" element={
+               <Route path="/sessao/:sessionId" element={
                     <ProtectedRoute>
                       <SessaoDetalhes />
                     </ProtectedRoute>

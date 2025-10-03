@@ -122,7 +122,7 @@ export const Solicitacoes = () => {
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3 }}
               >
-                <Card className="p-6 bg-dark/40 border border-dark/50 shadow-lg hover:shadow-xl transition bg-white">
+                <Card className="p-6 bg-white border border-dark/50 shadow-lg hover:shadow-xl transition bg-white ">
                   {/* Topo */}
                   <div className="flex items-center gap-4 mb-4">
                     <div className="w-14 h-14 rounded-full bg-accent/20 flex items-center justify-center">
@@ -145,7 +145,7 @@ export const Solicitacoes = () => {
                   )}
 
                   {/* Rodapé */}
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between bg-white">
                     <span
                       className={`px-3 py-1 text-xs rounded-full font-medium ${
                         urgencyColors[req.urgency] || "bg-gray-100 text-gray-600"

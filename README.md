@@ -1,8 +1,8 @@
-# 🧠 Cuide+ - Sistema de Agendamento Psicológico
+# 🧠 Scheduling- Sistema de Agendamento Psicológico
  
 Sistema web moderno para gestão de consultas psicológicas, desenvolvido com React 19 + Vite, focado em atendimentos voluntários em universidades, ONGs e projetos sociais.
  
-![Cuide+ Logo](public/logo.png)
+![Scheduling Logo](public/logo.png)
  
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](CHANGELOG.md)
 [![React](https://img.shields.io/badge/React-19.1.1-61dafb.svg)](https://reactjs.org/)
@@ -25,7 +25,7 @@ Sistema web moderno para gestão de consultas psicológicas, desenvolvido com Re
  
 ## 🎯 Sobre o Projeto
  
-O **Cuide+** é uma plataforma web desenvolvida para facilitar o agendamento e gestão de consultas psicológicas em ambientes de atendimento voluntário. O sistema oferece interfaces diferenciadas para psicólogos e pacientes, com foco na experiência do usuário e eficiência operacional.
+O **Scheduling** é uma plataforma web desenvolvida para facilitar o agendamento e gestão de consultas psicológicas em ambientes de atendimento voluntário. O sistema oferece interfaces diferenciadas para psicólogos e pacientes, com foco na experiência do usuário e eficiência operacional.
  
 ### Objetivos
  
@@ -441,12 +441,13 @@ const ProtectedRoute = ({ children }) => {
 - **Status de Sessões**: Controle completo do ciclo de vida
  
 ### Interface Responsiva
- 
-- **Mobile-First**: Design otimizado para dispositivos móveis
-- **Sidebar Adaptativa**: Menu hambúrguer em telas pequenas
-- **Cards Flexíveis**: Layout que se adapta ao conteúdo
-- **Navegação Intuitiva**: UX consistente em todos os dispositivos
- 
+**Design Responsivo**: Interface que se ajusta a diferentes tamanhos de tela
+
+**Menu Adaptável**: Sidebar que se transforma em menu hambúrguer em telas menores
+
+**Cartões Flexíveis**: Layout que cresce ou encolhe conforme o conteúdo apresentado
+
+**Navegação Simples**: Experiência consistente e fácil em todos os dispositivos
 ## 🔧 Scripts Disponíveis
  
 ```bash
@@ -480,9 +481,9 @@ npm install
  
 ---
  
-<div align="center">
+<div clasname="center">
   <p>Desenvolvido com amor para facilitar o acesso à saúde mental</p>
-  <p><strong>Cuide+ v1.0.0 - Sistema de Agendamento Psicológico</strong></p>
+  <p><strong>Scheduling v1.0.0 - Sistema de Agendamento Psicológico</strong></p>
   <p>React 19 • Vite 7 • Tailwind CSS 4 • Hugging Face AI</p>
 </div>
  

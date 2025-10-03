@@ -8,6 +8,7 @@ import { LoadingSpinner } from '../components/LoadingSpinner';
 import { Input } from '../components/Input';
 import { ArrowLeft, Users, Mail, Phone, Calendar, Activity, CheckCircle, Clock, Eye, Plus } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const PatientInfo = ({ patient }) => {
   const fields = [
@@ -20,38 +21,44 @@ const PatientInfo = ({ patient }) => {
   ];
 
   return (
-    <Card>
-      <div className="space-y-6">
-        <div className="flex items-center gap-4">
-          <div className="w-20 h-20 bg-gradient-to-br from-light to-accent rounded-full flex items-center justify-center">
-            <Users className="w-10 h-10 text-white" />
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold text-dark">{patient.name}</h2>
-            <p className="text-dark/60">Paciente #{patient.id}</p>
-          </div>
-        </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {fields.map(({ icon: IconComponent, label, value, href, isStatus }) => (
-            <div key={label} className="flex items-center gap-3">
-              <IconComponent className="w-5 h-5 text-dark/60" />
-              <div>
-                <p className="text-sm text-dark/60">{label}</p>
-                {href ? (
-                  <a href={href} className="font-semibold text-dark hover:text-light transition-colors">{value}</a>
-                ) : isStatus ? (
-                  <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
-                    value === 'Ativo' || value === 'Em tratamento' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                  }`}>{value}</span>
-                ) : (
-                  <p className="font-semibold text-dark">{value}</p>
-                )}
-              </div>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.4 }}
+    >
+      <Card className='bg-white'>
+        <div className="space-y-6">
+          <div className="flex items-center gap-4">
+            <div className="w-20 h-20 bg-gradient-to-br from-light to-accent rounded-full flex items-center justify-center">
+              <Users className="w-10 h-10 text-white" />
             </div>
-          ))}
+            <div>
+              <h2 className="text-2xl font-bold text-dark">{patient.name}</h2>
+              <p className="text-dark/60">Paciente #{patient.id}</p>
+            </div>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {fields.map(({ icon: IconComponent, label, value, href, isStatus }) => (
+              <div key={label} className="flex items-center gap-3">
+                <IconComponent className="w-5 h-5 text-dark/60" />
+                <div>
+                  <p className="text-sm text-dark/60">{label}</p>
+                  {href ? (
+                    <a href={href} className="font-semibold text-dark hover:text-light transition-colors">{value}</a>
+                  ) : isStatus ? (
+                    <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
+                      value === 'Ativo' || value === 'Em tratamento' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                    }`}>{value}</span>
+                  ) : (
+                    <p className="font-semibold text-dark">{value}</p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    </Card>
+      </Card>
+    </motion.div>
   );
 };
 
@@ -112,7 +119,12 @@ const SessionForm = ({ data, onChange, onSubmit, onCancel, loading }) => {
 };
 
 const Header = ({ onBack, title }) => (
-  <div className="flex items-center gap-4">
+  <motion.div
+    className="flex items-center gap-4"
+    initial={{ opacity: 0, x: -20 }}
+    animate={{ opacity: 1, x: 0 }}
+    transition={{ duration: 0.4 }}
+  >
     <Button 
       variant="secondary" 
       onClick={onBack} 
@@ -122,11 +134,11 @@ const Header = ({ onBack, title }) => (
       Voltar
     </Button>
     <h1 className="text-3xl font-bold text-white">{title}</h1>
-  </div>
+  </motion.div>
 );
 
 const SessionsCard = ({ sessions, showForm, formData, onFormChange, onFormSubmit, onFormCancel, onShowForm, onStatusUpdate, updatingSessions, creatingSession, navigate }) => (
-  <Card>
+  <Card className='bg-white'>
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h3 className="text-xl font-bold text-dark flex items-center gap-2">
@@ -138,15 +150,25 @@ const SessionsCard = ({ sessions, showForm, formData, onFormChange, onFormSubmit
           Nova Sessão
         </Button>
       </div>
-      {showForm && (
-        <SessionForm
-          data={formData}
-          onChange={onFormChange}
-          onSubmit={onFormSubmit}
-          onCancel={onFormCancel}
-          loading={creatingSession}
-        />
-      )}
+      <AnimatePresence>
+        {showForm && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.4 }}
+            style={{ overflow: 'hidden' }}
+          >
+            <SessionForm
+              data={formData}
+              onChange={onFormChange}
+              onSubmit={onFormSubmit}
+              onCancel={onFormCancel}
+              loading={creatingSession}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
       <SessionList sessions={sessions} onStatusUpdate={onStatusUpdate} updatingSessions={updatingSessions} navigate={navigate} />
     </div>
   </Card>
@@ -163,41 +185,62 @@ const SessionList = ({ sessions, onStatusUpdate, updatingSessions, navigate }) =
   }
 
   return (
-    <div className="space-y-4">
+    <motion.div
+      className="space-y-4"
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: {},
+        visible: {
+          transition: {
+            staggerChildren: 0.08,
+          },
+        },
+      }}
+    >
       {sessions.map(session => (
-        <div key={session.id} className="bg-white/50 rounded-lg border border-white/20 p-4">
-          <div className="flex justify-between items-start">
-            <div className="flex-1">
-              <div className="flex items-center gap-2 mb-2">
-                <p className="font-semibold text-dark">Sessão #{session.id}</p>
-                <select
-                  value={session.status}
-                  onChange={(e) => onStatusUpdate(session.id, e.target.value)}
-                  disabled={updatingSessions.has(session.id)}
-                  className="px-2 py-1 text-xs font-medium border-0 rounded-full focus:ring-2 focus:ring-light bg-blue-100 text-blue-800"
-                >
-                  <option value="agendado">Agendado</option>
-                  <option value="iniciado">Iniciado</option>
-                  <option value="concluido">Concluído</option>
-                  <option value="cancelado">Cancelado</option>
-                </select>
+        <motion.div
+          key={session.id}
+          variants={{
+            hidden: { opacity: 0, y: 10 },
+            visible: { opacity: 1, y: 0 },
+          }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className="bg-white/50 rounded-lg border border-white/20 p-4">
+            <div className="flex justify-between items-start">
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-2">
+                  <p className="font-semibold text-dark">Sessão #{session.id}</p>
+                  <select
+                    value={session.status}
+                    onChange={(e) => onStatusUpdate(session.id, e.target.value)}
+                    disabled={updatingSessions.has(session.id)}
+                    className="px-2 py-1 text-xs font-medium border-0 rounded-full focus:ring-2 focus:ring-light bg-blue-100 text-blue-800"
+                  >
+                    <option value="agendado">Agendado</option>
+                    <option value="iniciado">Iniciado</option>
+                    <option value="concluido">Concluído</option>
+                    <option value="cancelado">Cancelado</option>
+                  </select>
+                </div>
+                <p className="text-sm text-dark/70 mb-2">
+                  {new Date(session.date).toLocaleDateString('pt-BR')} às {session.time}
+                </p>
+                <p className="text-dark font-medium">{session.description}</p>
               </div>
-              <p className="text-sm text-dark/70 mb-2">
-                {new Date(session.date).toLocaleDateString('pt-BR')} às {session.time}
-              </p>
-              <p className="text-dark font-medium">{session.description}</p>
+              <button
+                onClick={() => navigate(`/sessao/${session.id}`)}
+                className="p-2 text-dark/60 hover:text-dark transition-colors"
+                title="Ver detalhes completos"
+              >
+                <Eye size={18} />
+              </button>
             </div>
-            <button
-              onClick={() => navigate(`/sessao/${session.id}`)}
-              className="p-2 text-dark/60 hover:text-dark transition-colors"
-              title="Ver detalhes completos"
-            >
-              <Eye size={18} />
-            </button>
           </div>
-        </div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 };
 
@@ -296,7 +339,13 @@ export const PacienteDetalhes = () => {
   if (!patient) return null;
 
   return (
-    <div className="space-y-6">
+    <motion.div
+      className="space-y-6"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 20 }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
+    >
       <Header onBack={() => navigate('/pacientes')} title="Detalhes do Paciente" />
       <PatientInfo patient={patient} />
       <SessionsCard
@@ -312,6 +361,6 @@ export const PacienteDetalhes = () => {
         creatingSession={creatingSession}
         navigate={navigate}
       />
-    </div>
+    </motion.div>
   );
 };
