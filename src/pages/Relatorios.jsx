@@ -24,6 +24,7 @@ import {
   LineChart,
   Line,
 } from 'recharts';
+import { motion } from 'framer-motion'; // 👈 Importa o Framer Motion
 
 export const Relatorios = () => {
   const { user } = useAuth();
@@ -51,17 +52,20 @@ export const Relatorios = () => {
   const { stats, frequencyData, statusData, riskAlerts, patientsData } =
     reportsData;
 
-  // Verifica se é um psicólogo novo (sem dados)
   const hasNoData = stats.activePatients === 0 && stats.totalSessions === 0;
 
   return (
-    <div className="space-y-6">
+    <motion.div
+      className="space-y-6"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
       <div className="text-center">
         <h1 className="text-3xl font-bold text-dark mb-2">Relatórios e Analytics</h1>
         <p className="text-dark/70">Acompanhe métricas e indicadores da sua prática</p>
       </div>
 
-      {/* Mensagem para psicólogos sem dados */}
       {hasNoData ? (
         <Card className="text-center py-12 border-2 border-dashed border-light/30 bg-white">
           <BarChart3 className="w-16 h-16 text-light/50 mx-auto mb-4" />
@@ -76,35 +80,64 @@ export const Relatorios = () => {
       ) : (
         <>
           {/* KPIs */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <Card className="text-center bg-white">
-              <Users className="w-8 h-8 text-light mx-auto mb-2" />
-              <h3 className="text-2xl font-bold text-dark">{stats.activePatients}</h3>
-              <p className="text-dark/70 text-sm">Pacientes Ativos</p>
-            </Card>
-
-            <Card className="text-center bg-white">
-              <Calendar className="w-8 h-8 text-accent mx-auto mb-2" />
-              <h3 className="text-2xl font-bold text-dark">{stats.totalSessions}</h3>
-              <p className="text-dark/70 text-sm">Total de Sessões</p>
-            </Card>
-
-            <Card className="text-center bg-white">
-              <TrendingUp className="w-8 h-8 text-green-500 mx-auto mb-2" />
-              <h3 className="text-2xl font-bold text-dark">{stats.attendanceRate}%</h3>
-              <p className="text-dark/70 text-sm">Taxa de Conclusão</p>
-            </Card>
-
-            <Card className="text-center bg-white">
-              <AlertTriangle className="w-8 h-8 text-red-500 mx-auto mb-2" />
-              <h3 className="text-2xl font-bold text-dark">{stats.riskAlerts}</h3>
-              <p className="text-dark/70 text-sm">Alertas de Risco</p>
-            </Card>
-          </div>
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-4 gap-4"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: {},
+              visible: {
+                transition: { staggerChildren: 0.15 },
+              },
+            }}
+          >
+            {[
+              {
+                icon: <Users className="w-8 h-8 text-light mx-auto mb-2" />,
+                value: stats.activePatients,
+                label: 'Pacientes Ativos',
+              },
+              {
+                icon: <Calendar className="w-8 h-8 text-accent mx-auto mb-2" />,
+                value: stats.totalSessions,
+                label: 'Total de Sessões',
+              },
+              {
+                icon: <TrendingUp className="w-8 h-8 text-green-500 mx-auto mb-2" />,
+                value: `${stats.attendanceRate}%`,
+                label: 'Taxa de Conclusão',
+              },
+              {
+                icon: <AlertTriangle className="w-8 h-8 text-red-500 mx-auto mb-2" />,
+                value: stats.riskAlerts,
+                label: 'Alertas de Risco',
+              },
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                transition={{ duration: 0.4 }}
+              >
+                <Card className="text-center bg-white">
+                  {item.icon}
+                  <h3 className="text-2xl font-bold text-dark">{item.value}</h3>
+                  <p className="text-dark/70 text-sm">{item.label}</p>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
 
           {/* Gráficos */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Gráfico de Linha - Frequência de Sessões */}
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-6"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+          >
+            {/* Linha */}
             <Card>
               <h2 className="text-xl font-semibold text-dark mb-4 bg-white">
                 Frequência de Sessões
@@ -115,12 +148,17 @@ export const Relatorios = () => {
                   <XAxis dataKey="month" />
                   <YAxis />
                   <Tooltip />
-                  <Line type="monotone" dataKey="sessions" stroke="#FF6B6B" strokeWidth={2} />
+                  <Line
+                    type="monotone"
+                    dataKey="sessions"
+                    stroke="#FF6B6B"
+                    strokeWidth={2}
+                  />
                 </LineChart>
               </ResponsiveContainer>
             </Card>
 
-            {/* Gráfico de Pizza - Status das Sessões */}
+            {/* Pizza - Status */}
             <Card>
               <h2 className="text-xl font-semibold text-dark mb-4 bg-white">
                 Status das Sessões
@@ -133,12 +171,14 @@ export const Relatorios = () => {
                     cy="50%"
                     outerRadius={80}
                     dataKey="value"
-                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(1)}%`}
+                    label={({ name, percent }) =>
+                      `${name}: ${(percent * 100).toFixed(1)}%`
+                    }
                   >
                     {statusData.map((entry, index) => (
                       <Cell
                         key={`cell-${index}`}
-                        fill={["#FF6384", "#36A2EB", "#FFCE56"][index % 3]}
+                        fill={['#FF6384', '#36A2EB', '#FFCE56'][index % 3]}
                       />
                     ))}
                   </Pie>
@@ -147,7 +187,7 @@ export const Relatorios = () => {
               </ResponsiveContainer>
             </Card>
 
-            {/* Gráfico de Pizza - Pacientes por Status de Sessão */}
+            {/* Pizza - Pacientes */}
             <Card>
               <h2 className="text-xl font-semibold text-dark mb-4 text-center bg-white">
                 Pacientes por Status de Sessão
@@ -160,12 +200,14 @@ export const Relatorios = () => {
                     cy="50%"
                     outerRadius={80}
                     dataKey="value"
-                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                    label={({ name, percent }) =>
+                      `${name}: ${(percent * 100).toFixed(0)}%`
+                    }
                   >
                     {patientsData.map((entry, index) => (
                       <Cell
                         key={`cell-${index}`}
-                        fill={["#4BC0C0", "#FF9F40", "#9966FF"][index % 3]}
+                        fill={['#4BC0C0', '#FF9F40', '#9966FF'][index % 3]}
                       />
                     ))}
                   </Pie>
@@ -173,50 +215,56 @@ export const Relatorios = () => {
                 </PieChart>
               </ResponsiveContainer>
             </Card>
-          </div>
+          </motion.div>
 
-          {/* Alertas de Risco */}
-          <Card>
-            <h2 className="text-xl font-semibold text-dark mb-4 flex items-center gap-2 bg-white">
-              <AlertTriangle className="w-5 h-5 text-red-500 bg-white" />
-              Alertas de Risco
-            </h2>
-            <div className="space-y-3">
-              {riskAlerts.length === 0 ? (
-                <p className="text-dark/70 text-center py-4 bg-white">
-                  Nenhum alerta de risco no momento
-                </p>
-              ) : (
-                riskAlerts.map((alert) => (
-                  <div
-                    key={alert.id}
-                    className="flex justify-between items-center p-4 bg-white/10 rounded-lg"
-                  >
-                    <div>
-                      <p className="font-medium text-dark">{alert.patient}</p>
-                      <p className="text-sm text-dark/70">{alert.reason}</p>
+          {/* Alertas */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+          >
+            <Card>
+              <h2 className="text-xl font-semibold text-dark mb-4 flex items-center gap-2 bg-white">
+                <AlertTriangle className="w-5 h-5 text-red-500 bg-white" />
+                Alertas de Risco
+              </h2>
+              <div className="space-y-3">
+                {riskAlerts.length === 0 ? (
+                  <p className="text-dark/70 text-center py-4 bg-white">
+                    Nenhum alerta de risco no momento
+                  </p>
+                ) : (
+                  riskAlerts.map((alert) => (
+                    <div
+                      key={alert.id}
+                      className="flex justify-between items-center p-4 bg-white/10 rounded-lg"
+                    >
+                      <div>
+                        <p className="font-medium text-dark">{alert.patient}</p>
+                        <p className="text-sm text-dark/70">{alert.reason}</p>
+                      </div>
+                      <div className="text-right">
+                        <span
+                          className={`px-3 py-1 rounded-full text-xs font-medium ${
+                            alert.risk === 'Alto'
+                              ? 'bg-red-500/20 text-red-700'
+                              : 'bg-yellow-500/20 text-yellow-700'
+                          }`}
+                        >
+                          Risco {alert.risk}
+                        </span>
+                        <p className="text-xs text-dark/70 mt-1 bg-white">
+                          {new Date(alert.date).toLocaleDateString('pt-BR')}
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-medium ${
-                          alert.risk === 'Alto'
-                            ? 'bg-red-500/20 text-red-700'
-                            : 'bg-yellow-500/20 text-yellow-700'
-                        }`}
-                      >
-                        Risco {alert.risk}
-                      </span>
-                      <p className="text-xs text-dark/70 mt-1 bg-white">
-                        {new Date(alert.date).toLocaleDateString('pt-BR')}
-                      </p>
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
-          </Card>
+                  ))
+                )}
+              </div>
+            </Card>
+          </motion.div>
         </>
       )}
-    </div>
+    </motion.div>
   );
-};
+};   
